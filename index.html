@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HookViral.ai – Viral hooks and scripts in seconds</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:#020617;font-family:'Bricolage Grotesque',system-ui,sans-serif;color:#e2e8f0}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.glow{background:radial-gradient(60% 50% at 20% 0%,rgba(249,115,22,.22),transparent 70%),radial-gradient(50% 45% at 85% 10%,rgba(244,63,94,.2),transparent 70%)}
+.grad{background:linear-gradient(90deg,#fb923c,#f43f5e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{background:linear-gradient(90deg,#f97316,#f43f5e);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px -6px rgba(244,63,94,.6)}
+.btn:active{transform:scale(.98)}
+.spin{width:18px;height:18px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.reveal{animation:r .5s ease both}
+@keyframes r{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+select,input{background:#0f172a;border:1px solid #1e293b;transition:border-color .2s,box-shadow .2s}
+select:focus,input:focus,button:focus-visible,a:focus-visible{outline:none;border-color:#fb923c;box-shadow:0 0 0 3px rgba(251,146,60,.3)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body class="antialiased">
+
+<nav class="sticky top-0 z-40 backdrop-blur bg-slate-950/80 border-b border-slate-800/80">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+    <a href="#top" class="flex items-center gap-2 font-extrabold text-lg">
+      <span class="grid place-items-center w-8 h-8 rounded-lg btn text-white shadow-[0_0_18px_rgba(244,63,94,.7)]">H</span>
+      <span>HookViral<span class="grad">.ai</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-7 text-sm text-slate-400">
+      <a href="#tool" class="hover:text-white">Generator</a>
+      <a href="#how" class="hover:text-white">How it works</a>
+      <a href="#pricing" class="hover:text-white">Pricing</a>
+    </div>
+    <button onclick="openModal()" class="btn text-white text-sm font-bold rounded-xl px-4 py-2.5 whitespace-nowrap">Upgrade to Pro ($19/mo)</button>
+  </div>
+</nav>
+
+<header id="top" class="glow">
+  <div class="max-w-4xl mx-auto px-4 pt-14 pb-10 md:pt-24 text-center">
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] tracking-tight">Stop the Scroll in <span class="grad">3 Seconds</span></h1>
+    <p class="mt-5 text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">Type your topic. Get three scroll-stopping hooks and a 30-second script for TikTok, Reels and Shorts, ready to film.</p>
+    <p class="mt-3 text-sm text-slate-500">Built on the hook patterns behind videos that keep viewers past the first 3 seconds.</p>
+    <a href="#tool" class="btn inline-block mt-8 text-white font-bold rounded-2xl px-7 py-3.5">Write my hooks free</a>
+  </div>
+</header>
+
+<main>
+<section id="tool" class="max-w-3xl mx-auto px-4 pb-16">
+  <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 md:p-7 shadow-[0_0_60px_-20px_rgba(249,115,22,.45)]">
+    <label for="topic" class="block text-sm font-semibold text-slate-300 mb-2">Your product, niche or topic</label>
+    <input id="topic" type="text" maxlength="80" placeholder="e.g. protein coffee, freelance design, budgeting" class="w-full rounded-xl px-4 py-3.5 text-base text-white placeholder-slate-500">
+    <p id="err" class="hidden text-sm text-rose-400 mt-2">Enter a topic first, at least 3 letters.</p>
+    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+      <div>
+        <label for="tone" class="block text-sm font-semibold text-slate-300 mb-2">Hook tone</label>
+        <select id="tone" class="w-full rounded-xl px-4 py-3.5 text-base text-white">
+          <option>Controversial</option><option>Curiosity Gap</option><option>Shocking Stat</option><option>Pain Point</option>
+        </select>
+      </div>
+      <div>
+        <label for="platform" class="block text-sm font-semibold text-slate-300 mb-2">Platform</label>
+        <select id="platform" class="w-full rounded-xl px-4 py-3.5 text-base text-white">
+          <option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option>
+        </select>
+      </div>
+    </div>
+    <button id="go" onclick="generate()" class="btn w-full mt-6 text-white font-bold rounded-xl py-4 text-base flex items-center justify-center gap-3">
+      <span id="goSpin" class="spin hidden"></span><span id="goText">Generate Viral Hooks &amp; Script</span>
+    </button>
+  </div>
+
+  <div id="results" class="hidden mt-8 space-y-6" aria-live="polite">
+    <div>
+      <h2 class="text-xl font-bold mb-3">Your 3 hooks</h2>
+      <div id="hooks" class="space-y-3"></div>
+    </div>
+    <div>
+      <div class="flex items-center justify-between mb-3 gap-3">
+        <h2 class="text-xl font-bold">30-second script</h2>
+        <button onclick="copyScript(this)" class="text-sm font-semibold text-orange-300 border border-slate-700 hover:border-orange-400 rounded-lg px-3 py-1.5 transition">Copy script</button>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-black overflow-hidden">
+        <div class="flex items-center gap-1.5 px-4 py-2.5 bg-slate-900 border-b border-slate-800">
+          <i class="w-2.5 h-2.5 rounded-full bg-rose-500"></i><i class="w-2.5 h-2.5 rounded-full bg-orange-400"></i><i class="w-2.5 h-2.5 rounded-full bg-emerald-400"></i>
+          <span class="mono text-xs text-slate-500 ml-2">script.txt</span>
+        </div>
+        <pre id="script" class="mono text-[13px] leading-relaxed text-emerald-300 p-4 whitespace-pre-wrap break-words"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="max-w-5xl mx-auto px-4 pb-16">
+  <h2 class="text-3xl font-extrabold text-center mb-8">From blank page to filmed video in three steps</h2>
+  <ol class="grid md:grid-cols-3 gap-4">
+    <li class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5"><h3 class="font-bold text-lg">1. Name your topic</h3><p class="text-slate-400 mt-1">A product, a niche or one idea is enough.</p></li>
+    <li class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5"><h3 class="font-bold text-lg">2. Pick tone and platform</h3><p class="text-slate-400 mt-1">Hooks are paced for each platform's feed.</p></li>
+    <li class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5"><h3 class="font-bold text-lg">3. Copy and film</h3><p class="text-slate-400 mt-1">Use a hook alone or the full 30-second blueprint.</p></li>
+  </ol>
+</section>
+
+<section id="pricing" class="max-w-md mx-auto px-4 pb-20">
+  <div class="rounded-2xl p-[1.5px] bg-gradient-to-br from-orange-500 to-rose-500 shadow-[0_0_60px_-15px_rgba(244,63,94,.6)]">
+    <div class="rounded-2xl bg-slate-950 p-7">
+      <h2 class="text-2xl font-extrabold">Pro</h2>
+      <p class="mt-2"><span class="text-5xl font-extrabold">$19</span><span class="text-slate-400"> / month</span></p>
+      <ul class="mt-5 space-y-3 text-slate-300">
+        <li class="flex gap-2"><span class="text-orange-400">✓</span> Unlimited generations</li>
+        <li class="flex gap-2"><span class="text-orange-400">✓</span> Advanced AI tones</li>
+        <li class="flex gap-2"><span class="text-orange-400">✓</span> Priority queue</li>
+        <li class="flex gap-2"><span class="text-orange-400">✓</span> Cancel any time</li>
+      </ul>
+      <button onclick="openModal()" class="btn w-full mt-7 text-white font-bold rounded-xl py-3.5">Upgrade to Pro</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="border-t border-slate-800 py-8 text-center text-sm text-slate-500 px-4">
+  <p>© <span id="yr">2026</span> HookViral.ai. Made for creators who ship daily.</p>
+</footer>
+
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+  <div class="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 reveal" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <h3 id="mt" class="text-xl font-extrabold">Go Pro for $19/mo</h3>
+    <div id="mBody">
+      <p class="text-slate-400 text-sm mt-2">Payments open soon. Join the list and get Pro the day it launches.</p>
+      <input id="email" type="email" placeholder="you@email.com" class="w-full rounded-xl px-4 py-3 mt-4 text-white placeholder-slate-500">
+      <p id="mErr" class="hidden text-sm text-rose-400 mt-2">Enter a valid email address.</p>
+      <button onclick="joinList()" class="btn w-full mt-4 text-white font-bold rounded-xl py-3">Join the Pro list</button>
+    </div>
+    <button onclick="closeModal()" class="w-full mt-3 text-sm text-slate-400 hover:text-white py-2">Close</button>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+$('yr').textContent=new Date().getFullYear();
+
+const T={
+ 'Controversial':[
+  'Unpopular opinion: most {t} advice online is making you worse.',
+  'Everyone is wrong about {t}, and I can prove it in 20 seconds.',
+  'Stop doing {t} the way gurus teach it. Here is what works.'],
+ 'Curiosity Gap':[
+  'I tried {t} for 30 days. Day 12 changed everything.',
+  'There is one {t} trick nobody talks about, and it takes 5 minutes.',
+  'Nobody told me this about {t} until it was too late.'],
+ 'Shocking Stat':[
+  '90% of people quit {t} in the first week, and this is why.',
+  'Only 1 in 10 people get {t} right. Are you one of them?',
+  'Doing {t} wrong can cost you 3 times more than doing it right.'],
+ 'Pain Point':[
+  'Tired of putting hours into {t} and getting nowhere?',
+  'If {t} feels harder than it should, you are missing this.',
+  'Struggling with {t}? You are not lazy, your method is broken.']
+};
+const PL={'TikTok':'Fast cuts, on-screen text in the first second, trending sound low.','YouTube Shorts':'Clear voiceover, loop the ending back to the hook.','Instagram Reels':'Bold captions, clean framing, save-worthy final line.'};
+let hooks=[],scriptText='';
+
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1])}
+
+function generate(){
+  const topic=$('topic').value.trim();
+  if(topic.length<3){$('err').classList.remove('hidden');$('topic').focus();return}
+  $('err').classList.add('hidden');
+  const tone=$('tone').value,plat=$('platform').value,btn=$('go');
+  btn.disabled=true;btn.classList.add('opacity-80');
+  $('goSpin').classList.remove('hidden');$('goText').textContent='Writing your hooks…';
+  setTimeout(()=>{
+    hooks=shuffle(T[tone]).map(h=>h.replace(/\{t\}/g,topic));
+    scriptText=
+`PLATFORM: ${plat} | TONE: ${tone}
+NOTE: ${PL[plat]}
+
+[0-3s] HOOK
+"${hooks[0]}"
+
+[3-10s] PROBLEM
+Show the mistake most people make with ${topic}. Say what it is costing them: time, money or results. Keep it to one sentence.
+
+[10-25s] SOLUTION
+Give 3 quick steps for ${topic}. One line each, one visual per step. End with a small proof or result.
+
+[25-30s] CTA
+"Follow for more ${topic} tips, and comment 'HOOK' and I will send you the checklist."`;
+    $('hooks').innerHTML='';
+    hooks.forEach((h,i)=>{
+      const d=document.createElement('div');
+      d.className='reveal rounded-2xl border border-slate-800 bg-slate-900/70 p-4 flex flex-col sm:flex-row sm:items-center gap-3';
+      d.style.animationDelay=(i*90)+'ms';
+      const p=document.createElement('p');p.className='flex-1 font-semibold text-base';p.textContent=h;
+      const b=document.createElement('button');
+      b.className='text-sm font-semibold text-orange-300 border border-slate-700 hover:border-orange-400 rounded-lg px-3 py-2 transition shrink-0';
+      b.textContent='Copy';b.onclick=()=>copyText(h,b,'Copy');
+      d.append(p,b);$('hooks').append(d);
+    });
+    $('script').textContent=scriptText;
+    $('results').classList.remove('hidden');
+    $('results').scrollIntoView({behavior:'smooth',block:'start'});
+    btn.disabled=false;btn.classList.remove('opacity-80');
+    $('goSpin').classList.add('hidden');$('goText').textContent='Generate again';
+  },1200);
+}
+
+async function copyText(txt,btn,label){
+  let ok=false;
+  try{await navigator.clipboard.writeText(txt);ok=true}catch(e){
+    try{const a=document.createElement('textarea');a.value=txt;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();ok=document.execCommand('copy');a.remove()}catch(e2){}
+  }
+  btn.textContent=ok?'Copied ✓':'Press and hold to copy';
+  setTimeout(()=>btn.textContent=label,1600);
+}
+function copyScript(b){copyText(scriptText,b,'Copy script')}
+
+function openModal(){const m=$('modal');m.classList.remove('hidden');m.classList.add('flex');setTimeout(()=>$('email')&&$('email').focus(),50)}
+function closeModal(){const m=$('modal');m.classList.add('hidden');m.classList.remove('flex')}
+function joinList(){
+  const e=$('email').value.trim();
+  if(!/^\S+@\S+\.\S+$/.test(e)){$('mErr').classList.remove('hidden');return}
+  $('mBody').innerHTML='<p class="text-slate-300 mt-3">You are on the list. We will email you when Pro opens.</p>';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+$('topic').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});
+</script>
+</body>
+</html>
