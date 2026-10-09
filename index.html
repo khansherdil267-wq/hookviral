@@ -38,7 +38,7 @@ select:focus,input:focus,button:focus-visible,a:focus-visible{outline:none;borde
       <a href="#how" class="hover:text-white">How it works</a>
       <a href="#pricing" class="hover:text-white">Pricing</a>
     </div>
-    <button onclick="openModal()" class="btn text-white text-sm font-bold rounded-xl px-4 py-2.5 whitespace-nowrap">Upgrade to Pro ($19/mo)</button>
+    <button onclick="openModal()" class="btn text-white text-sm font-bold rounded-xl px-4 py-2.5 whitespace-nowrap">Upgrade to Pro ($10/mo)</button>
   </div>
 </nav>
 
@@ -74,6 +74,7 @@ select:focus,input:focus,button:focus-visible,a:focus-visible{outline:none;borde
     <button id="go" onclick="generate()" class="btn w-full mt-6 text-white font-bold rounded-xl py-4 text-base flex items-center justify-center gap-3">
       <span id="goSpin" class="spin hidden"></span><span id="goText">Generate Viral Hooks &amp; Script</span>
     </button>
+    <p id="left" class="text-center text-sm text-slate-400 mt-3"></p>
   </div>
 
   <div id="results" class="hidden mt-8 space-y-6" aria-live="polite">
@@ -110,7 +111,7 @@ select:focus,input:focus,button:focus-visible,a:focus-visible{outline:none;borde
   <div class="rounded-2xl p-[1.5px] bg-gradient-to-br from-orange-500 to-rose-500 shadow-[0_0_60px_-15px_rgba(244,63,94,.6)]">
     <div class="rounded-2xl bg-slate-950 p-7">
       <h2 class="text-2xl font-extrabold">Pro</h2>
-      <p class="mt-2"><span class="text-5xl font-extrabold">$19</span><span class="text-slate-400"> / month</span></p>
+      <p class="mt-2"><span class="text-5xl font-extrabold">$10</span><span class="text-slate-400"> / month</span></p>
       <ul class="mt-5 space-y-3 text-slate-300">
         <li class="flex gap-2"><span class="text-orange-400">✓</span> Unlimited generations</li>
         <li class="flex gap-2"><span class="text-orange-400">✓</span> Advanced AI tones</li>
@@ -129,10 +130,18 @@ select:focus,input:focus,button:focus-visible,a:focus-visible{outline:none;borde
 
 <div id="modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
   <div class="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 reveal" role="dialog" aria-modal="true" aria-labelledby="mt">
-    <h3 id="mt" class="text-xl font-extrabold">Go Pro for $19/mo</h3>
+    <h3 id="mt" class="text-xl font-extrabold">Go Pro for $10/mo</h3>
     <div id="mBody">
-      <p class="text-slate-400 text-sm mt-2">Payments open soon. Join the Pro list with your email and get Pro the day it launches.</p>
-      <a id="mLink" href="https://docs.google.com/forms/d/e/1FAIpQLSfMf94bCdvmvUE6OmW5AJpXWMgLELVXX1X9PayFqDwoAMXiOg/viewform?usp=header" target="_blank" rel="noopener" class="btn block text-center w-full mt-4 text-white font-bold rounded-xl py-3">Join the Pro list</a>
+      <p class="text-slate-400 text-sm mt-2">Pro is $10/month with unlimited generations. Fill the short form with your email. We will reply with payment details, and after payment you get a Pro code.</p>
+      <a id="mLink" href="#" target="_blank" rel="noopener" class="btn block text-center w-full mt-4 text-white font-bold rounded-xl py-3">Request Pro access</a>
+      <div class="mt-5 pt-4 border-t border-slate-800">
+        <label for="proCode" class="block text-sm font-semibold text-slate-300">Have a Pro code?</label>
+        <div class="flex gap-2 mt-2">
+          <input id="proCode" type="text" placeholder="HV-XXXX-XXXX" autocomplete="off" class="mono flex-1 min-w-0 rounded-xl px-3 py-2.5 text-white placeholder-slate-500 uppercase">
+          <button onclick="applyCode()" class="btn text-white font-bold rounded-xl px-4">Apply</button>
+        </div>
+        <p id="codeMsg" class="text-sm mt-2"></p>
+      </div>
     </div>
     <button onclick="closeModal()" class="w-full mt-3 text-sm text-slate-400 hover:text-white py-2">Close</button>
   </div>
@@ -166,9 +175,25 @@ const PAY_URL='';
 const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSfMf94bCdvmvUE6OmW5AJpXWMgLELVXX1X9PayFqDwoAMXiOg/viewform?usp=header";
 const FREE_LIMIT=3;
 $('mLink').href=PAY_URL||FORM_URL;
-if(PAY_URL)$('mLink').textContent='Pay $19/mo and unlock Pro';
-function used(){try{const o=JSON.parse(localStorage.getItem('hv')||'{}');return o.d===new Date().toDateString()?o.n:0}catch(e){return 0}}
-function bump(){try{localStorage.setItem('hv',JSON.stringify({d:new Date().toDateString(),n:used()+1}))}catch(e){}}
+if(PAY_URL)$('mLink').textContent='Pay $10/mo and unlock Pro';
+const PRO_HASHES=["e262c2c3ee434ad97c16158791c8cf9ccab9fffd857536520e5f65fb2dc3aa21", "440bccf05bb9355373240145c6280888a7863bf65a100fd8dd83c417db584f28", "dd708c55fdbbee7366ca171b6adaca0a5a61cd03ec6ea5f94c8513ad1b90c89e", "0867366dae757ecd7731e83216de5ac5172ac688af76c0929cbd60af802b5e4d", "70582c14aea9559d588868eef489292d9118bfc858075ae96678137b76b16cfe", "7a5623105a98f11efad0da856ea9a864e8b13ae04a7cd523d61047f81b24233d", "feec7b8df62cbdffdbae82ed1efe2ee567dcf529c7bc813ae5054a626f4a1b54", "0f45eb58dc39705510aeeb8f8c1fcafbbcfd1518339523c8205a4dc9a9a7ff3c", "d310e57f61d2fa7e5caa05d92a728e3d35932096069fa32e57a2797eed02f9b7", "fb684527ed3b254aee7edc13539f1470886003b8edd54bae26a5769615eecb5a"];
+function isPro(){try{return localStorage.getItem('hv_pro')==='1'}catch(e){return false}}
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function applyCode(){
+  const c=$('proCode').value.trim().toUpperCase(),m=$('codeMsg');
+  if(!c){return}
+  let ok=false;
+  try{ok=PRO_HASHES.includes(await sha(c))}catch(e){}
+  if(ok){
+    try{localStorage.setItem('hv_pro','1')}catch(e){}
+    m.className='text-sm mt-2 text-emerald-400';m.textContent='Pro unlocked on this device. Enjoy unlimited hooks.';showLeft();
+  }else{
+    m.className='text-sm mt-2 text-rose-400';m.textContent='That code is not valid. Check it and try again.';
+  }
+}
+function used(){try{return parseInt(localStorage.getItem('hv_n')||'0',10)||0}catch(e){return 0}}
+function bump(){try{localStorage.setItem('hv_n',String(used()+1))}catch(e){}}
+function showLeft(){const el=$('left');if(!el)return;el.textContent=isPro()?'Pro active: unlimited generations':Math.max(0,FREE_LIMIT-used())+' of '+FREE_LIMIT+' free generations left, then Pro is $10/month';}
 function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1])}
 function local(t,tone){
   return{hooks:shuffle(T[tone]).map(h=>h.replace(/\{t\}/g,t)),
@@ -180,7 +205,7 @@ async function generate(){
   const topic=$('topic').value.trim();
   if(topic.length<3){$('err').classList.remove('hidden');$('topic').focus();return}
   $('err').classList.add('hidden');
-  if(used()>=FREE_LIMIT){openModal();return}
+  if(!isPro()&&used()>=FREE_LIMIT){openModal();return}
   const tone=$('tone').value,plat=$('platform').value,btn=$('go');
   btn.disabled=true;btn.classList.add('opacity-80');
   $('goSpin').classList.remove('hidden');$('goText').textContent='Writing your hooks…';
@@ -208,7 +233,7 @@ async function generate(){
   $('script').textContent=scriptText;
   $('results').classList.remove('hidden');
   $('results').scrollIntoView({behavior:'smooth',block:'start'});
-  bump();
+  bump();showLeft();
   btn.disabled=false;btn.classList.remove('opacity-80');
   $('goSpin').classList.add('hidden');$('goText').textContent='Generate again';
 }
@@ -225,6 +250,7 @@ function copyScript(b){copyText(scriptText,b,'Copy script')}
 
 function openModal(){const m=$('modal');m.classList.remove('hidden');m.classList.add('flex');}
 function closeModal(){const m=$('modal');m.classList.add('hidden');m.classList.remove('flex')}
+showLeft();
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 $('topic').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});
 </script>
